@@ -1,0 +1,8 @@
+# Request a timed spray burst (relay ON for duration_s, then OFF).
+float32 duration_s      # 0 => use volume_ml
+float32 volume_ml       # 0 => use duration_s
+bool force              # ignore tank-low warning (still blocked when empty)
+---
+bool accepted
+string message
+float32 planned_duration_s

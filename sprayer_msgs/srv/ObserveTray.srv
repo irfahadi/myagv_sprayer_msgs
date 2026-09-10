@@ -1,0 +1,6 @@
+# Ask the vision node to analyse the current camera view for a named tray.
+string tray_name
+float32 timeout_s
+---
+bool success
+sprayer_msgs/TrayObservation observation
