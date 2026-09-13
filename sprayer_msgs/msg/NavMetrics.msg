@@ -4,7 +4,7 @@ std_msgs/Header header
 
 string algorithm
 string tray_id
-string scenario              # A_ideal | B_loc_noise | C_unmapped | D_stale_map | E_multi_target
+string scenario              # 1_ideal | 2_unmapped_persistent | 2_unmapped_transient
 uint32 trial
 
 bool success                 # reached the correct tray dock zone without collision

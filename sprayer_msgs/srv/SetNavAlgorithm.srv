@@ -1,5 +1,5 @@
 # Switch the Layer-2 navigation algorithm at runtime (used by the benchmark runner).
-string algorithm             # vfh_ql | dqn | astar | dstar_lite
+string algorithm             # vfh_ql | cql | sarsa | astar | dstar_lite
 ---
 bool success
 string message
