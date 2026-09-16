@@ -32,7 +32,7 @@ Nama paketnya `sprayer_msgs` (nama repo `myagv_sprayer_msgs`).
 |---|---|
 | `TankLevel` | sisa cairan dari HC-SR04 di tutup tangki; `low`/`empty` memicu proteksi pompa kering |
 | `SprayStatus` | keadaan relai/pompa, alasan penghambatan, total ml |
-| `TrayObservation` | hasil pengamatan satu baki: bbox, indeks kelembapan, dosis rekomendasi |
+| `TrayObservation` | hasil pengamatan satu baki: identitas + bbox dari `tray_detector_node` (myagv_sprayer_jetson). Field kelembapan/dosis masih ada di skema tapi belum diisi node manapun -- disiapkan untuk sumber WSN nanti |
 | `NavState` | **satu siklus keputusan navigasi**: 8 bit sektor, sudut target relatif, visibilitas, indeks state, aksi, reward, waktu keputusan |
 | `NavMetrics` | satu rekaman metrik per percobaan navigasi (untuk matriks skenario A–E) |
 | `DockStatus` | state machine visual servoing dan error lateral/jarak/yaw |
