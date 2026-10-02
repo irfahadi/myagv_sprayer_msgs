@@ -16,3 +16,20 @@ float32 dry_ratio           # fraction of the tray's soil pixels classified as d
 float32 moisture_index      # 0 (dry) .. 1 (wet)
 bool needs_spray            # moisture_index < threshold
 float32 recommended_ml      # dose suggested for this tray
+
+# Robot-frame (base_footprint) bearing to the detected marker's bbox centre,
+# from the camera intrinsics and the same optical->base transform
+# aruco_detector_node uses (sprayer_docking/camera_geometry.py). This is what
+# lets the navigation goal signal fall back on the CNN detector when cv2.aruco
+# fails to DECODE a marker it can still SEE -- see
+# nav_controller_node._update_tracker and docs/vfh_ql.md sec.5.
+#
+# There is deliberately NO range field here. Range from a bbox is
+# fx*marker_len/width, biased by 1/cos(incidence): +15% at 30 deg, +41% at
+# 45 deg -- worst exactly where this fallback is meant to earn its keep, and
+# biased in the dangerous direction (an over-estimated range means a leg never
+# crosses dock_radius and burns nav_timeout_s). Bearing has no such problem:
+# it is invariant to the ray's scale except through the 0.15 m camera offset,
+# so a +/-50% range error moves it ~2 deg against a 45 deg sector width.
+float32 bearing_rad
+bool bearing_valid          # false unless tray_detected AND intrinsics are known

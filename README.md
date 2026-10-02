@@ -34,7 +34,7 @@ Nama paketnya `sprayer_msgs` (nama repo `myagv_sprayer_msgs`).
 | `SprayStatus` | keadaan relai/pompa, alasan penghambatan, total ml |
 | `TrayObservation` | hasil pengamatan satu baki: identitas + bbox dari `tray_detector_node` (myagv_sprayer_jetson). Field kelembapan/dosis masih ada di skema tapi belum diisi node manapun -- disiapkan untuk sumber WSN nanti |
 | `NavState` | **satu siklus keputusan navigasi**: 8 bit sektor, sudut target relatif, visibilitas, indeks state, aksi, reward, waktu keputusan |
-| `NavMetrics` | satu rekaman metrik per percobaan navigasi (untuk matriks skenario A–E) |
+| `NavMetrics` | satu rekaman metrik per percobaan navigasi (untuk matriks skenario A–E). `emergency_events` menghitung pemicuan predikat jarak-aman, **bukan** kontak fisik — tidak sebanding dengan kolom Collisions tabel Skenario 1/2 yang berasal dari sapuan footprint sim2d |
 | `DockStatus` | state machine visual servoing dan error lateral/jarak/yaw |
 | `ArucoMarker`, `ArucoMarkerArray` | identitas baki + pose 6-DOF dari satu frame |
 

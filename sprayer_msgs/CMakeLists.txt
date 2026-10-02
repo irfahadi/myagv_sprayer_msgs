@@ -12,7 +12,6 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/TrayObservation.msg"
   "msg/NavState.msg"
   "msg/NavMetrics.msg"
-  "msg/DockStatus.msg"
   "msg/ArucoMarker.msg"
   "msg/ArucoMarkerArray.msg"
   "srv/Spray.srv"

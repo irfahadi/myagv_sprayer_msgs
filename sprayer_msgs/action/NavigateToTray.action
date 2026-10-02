@@ -1,10 +1,9 @@
-# Goal-conditioned navigation to a specific numbered tray, then optional ArUco docking.
+# Goal-conditioned navigation to a specific numbered tray.
 # Replaces nav2_msgs/NavigateToPose: the goal is a tray IDENTITY, not a map pose, so the
 # same interface serves both the map-based baselines and the robot-centric RL policy.
 string tray_id               # "baki_1_barat_laut" ... must exist in tray_waypoints.yaml
 uint8 goal_id                # 0..3, the goal-conditioning input of the policy
 string algorithm             # "" = keep current
-bool dock                    # true = hand over to visual servoing inside dock_radius
 string scenario              # tag written into the metrics record, "" when not benchmarking
 uint32 trial
 ---
@@ -12,7 +11,7 @@ bool success
 string message
 sprayer_msgs/NavMetrics metrics
 ---
-string state                 # SEARCH | NAVIGATE | DOCK | DONE
+string state                 # UNDOCK | SEARCH | NAVIGATE | DONE
 float32 distance_to_goal_m
 float32 goal_bearing_rad
 bool goal_visible
