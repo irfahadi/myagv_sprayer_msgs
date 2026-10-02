@@ -1,7 +1,12 @@
-# One detected fiducial. Each tray carries three (DICT_4X4_50): ids 1..4 on the
-# dock face, 5..12 on the two side faces -- see myagv_sprayer_gazebo's
-# generate_aruco_markers.py. cv2.aruco only decodes within ~+-20-25 deg of a
-# marker's normal, which is why one face per tray was not enough.
+# One detected fiducial. Each tray carries three stands (DICT_4X4_50) that all
+# SHARE the tray's single id -- ids 1..4, three instances each, on the dock face
+# and both side faces (myagv_sprayer_gazebo's generate_aruco_markers.py). A tray
+# has one identity whichever side you read it from. cv2.aruco only decodes within
+# ~+-20 deg of a marker's normal, which is why one face per tray was not enough.
+#
+# Published only after solvePnP succeeds AND the reprojection error is within
+# aruco_detector_node's max_reprojection_error. A decoded marker can therefore be
+# absent here; the node logs when it drops one.
 std_msgs/Header header       # frame_id = camera optical frame
 
 int32 id
