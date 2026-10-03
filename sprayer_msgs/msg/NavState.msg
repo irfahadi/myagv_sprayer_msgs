@@ -1,9 +1,14 @@
-# One decision cycle of the Layer-2 navigation controller (VFH-QL / DQN / A* / D* Lite).
+# One decision cycle of the Layer-2 navigation controller
+# (VFH-QL / CQL / SARSA / A* / D* Lite).
 # Mirrors the sensory state-space of Abdalmanan et al. (2023), IEEE Access:
-#   8 binary open/blocked sectors + relative target angle + target visibility.
+#   8 binary open/blocked sectors + relative target angle + target visibility,
+# plus this project's two additions -- momentum and goal_id (see the Jetson
+# repo's docs/vfh_ql.md sec.1).
 std_msgs/Header header
 
-string algorithm            # vfh_ql | dqn | astar | dstar_lite
+string algorithm            # vfh_ql | cql | sarsa | astar | dstar_lite
+                            # DQN was dropped; CQL and SARSA replaced it as the
+                            # absolute-cell-state comparison.
 uint8[8] sector_blocked     # 1 = blocked, index 0 = robot heading, +45 deg per index
 float32[8] sector_min_range # metres, min LiDAR return inside each 45 deg sector
 
@@ -25,10 +30,11 @@ float32 reward              # reward attributed to this transition (paper scale)
 float32 decision_ms         # wall-clock cost of this decision cycle
 bool bearing_from_memory    # true when goal_bearing is the last-known value (marker lost)
 
-# Where goal_bearing_rad came from THIS cycle. The number Scenario 3.2 needs in
-# order to say anything honest about the vision model's role in navigation: the
-# fraction of ticks with source == YOLO is exactly "how often the CNN supplied a
-# direction cv2.aruco could not".
+# Where goal_bearing_rad came from THIS cycle. The number the live run
+# (Scenario 4, formerly 3.2) needs in order to say anything honest about the
+# vision model's role in navigation: the fraction of ticks with source == YOLO
+# is exactly "how often the CNN supplied a direction cv2.aruco could not".
+# A YOLO count of zero is a real result about the detector's envelope, not a bug.
 uint8 GOAL_BEARING_NONE = 0     # no estimate at all
 uint8 GOAL_BEARING_ARUCO = 1    # cv2.aruco decode, solvePnP pose (also sets goal_visible)
 uint8 GOAL_BEARING_YOLO = 2     # CNN detection re-anchored the direction; goal_visible stays false

@@ -4,7 +4,19 @@ std_msgs/Header header
 
 string algorithm
 string tray_id
-string scenario              # 1_ideal | 2_unmapped_persistent | 2_unmapped_transient
+# Code key of the scenario, NOT its number in the protocol document. The keys are
+# hashed into each trial's seed by sim2d/benchmark.episode_seed(), so renaming one
+# re-rolls every start pose, goal draw and obstacle placement and makes every
+# recorded result unreproducible. They are frozen, which is why Scenario 3 in
+# docs/experiment_protocol.md is run as `--scenario 4`:
+#   1_ideal                                        Scenario 1
+#   2_unmapped_persistent | 2_unmapped_transient   Scenario 2
+#   4_visreward_uniform   | 4_visreward_wsn        Scenario 3
+#   4_multileg                                     ablation sweeps only
+# Scenario 4 (live Gazebo) has no code key. Live runs currently leave this field
+# "" and `trial` 0 -- mission_node does not tag them -- so a live run produces no
+# scenario-tagged CSV. Known gap, see RESULTS.md "Open items".
+string scenario
 uint32 trial
 
 bool success                 # reached the correct tray dock zone

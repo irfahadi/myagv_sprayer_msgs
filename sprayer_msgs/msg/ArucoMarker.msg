@@ -16,15 +16,27 @@ float32 range_m              # marker distance in base_footprint
 float32 yaw_to_marker_rad    # robot yaw error w.r.t. the marker's surface normal;
                              # 0 = squarely facing. Measured in the CAMERA frame,
                              # so it is stretched by 1/cos(camera_pitch) relative
-                             # to a true base-frame yaw -- fine as a servoing
-                             # error signal (visual_servo_node drives it to 0),
-                             # wrong for reconstructing geometry.
+                             # to a true base-frame yaw -- it was fine as a servoing
+                             # error signal for visual_servo_node, which drove it to
+                             # 0, but that node is gone and nothing consumes this
+                             # now. Still wrong for reconstructing geometry: do not
+                             # reach for it as a yaw just because it is here.
 float32 normal_yaw_base_rad  # yaw of the marker's OUTWARD normal in base_footprint
                              # -- the way the printed face looks, exactly, with the
-                             # camera pitch already taken out. Lets a consumer turn
-                             # "where the marker is" into "where the tray's dock
-                             # pose is", which is what navigation actually steers
-                             # at: a side-face marker sits 1.01 m from it, nearly
-                             # 3x goal_radius. Computed from the same solvePnP
-                             # rotation as yaw_to_marker_rad, not derived from it.
+                             # camera pitch already taken out. Computed from the same
+                             # solvePnP rotation as yaw_to_marker_rad, not derived
+                             # from it.
+                             #
+                             # PUBLISHED BUT CURRENTLY UNCONSUMED. It existed to turn
+                             # "where the marker is" into "where the tray's dock pose
+                             # is". Anchoring the tracker on the dock pose was tried
+                             # and ABANDONED: the dock pose is a point in free space
+                             # the robot stands ON, so its bearing is ill-conditioned
+                             # as range goes to zero and 1 cm of overshoot flips it
+                             # 180 deg. The marker is the better anchor precisely
+                             # because it is always BEHIND the stopping point, behind
+                             # an impassable tray. Navigation now steers at the marker
+                             # and ends a leg on a close-range sighting. Kept because
+                             # it is cheap and geometrically correct; see the Jetson
+                             # repo's docs/RESULTS.md ("Abandoned experiments").
 float32 reprojection_error   # px, solvePnP quality
